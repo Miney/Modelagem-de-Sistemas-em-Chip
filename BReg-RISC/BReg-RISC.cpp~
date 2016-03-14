@@ -1,0 +1,37 @@
+/*
+Yasmin Pimentel 11/0144341
+Em 28/05/2013
+*/
+
+#include "BReg-RISC.h"
+#include <iostream>
+
+using namespace std;
+
+void BancoRegistradores::le_enderecos(){
+	cout<<"Entrou na funcao le" <<endl;
+	if(Reg1.read() == 0){
+		DataA.write(0);
+	}
+	else{		
+		DataA.write(Banco[Reg1.read()]);		
+	}
+	
+	if(Reg2.read() == 0){
+		DataB.write(0);	
+	}	
+	else{				
+		DataB.write(Banco[Reg2.read()]);
+	}	
+	cout<<"Data A:"<< DataA << endl;
+	cout<<"Data B:"<< DataB << endl;
+
+}
+
+void BancoRegistradores::escreve(){	
+	cout<<"Entrou na funcao escreve" <<endl;
+	if(WReg == 1){	
+		Banco[WriteReg.read()].write(WData.read());	
+	}	
+}
+

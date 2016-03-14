@@ -1,0 +1,46 @@
+#include "systemc.h"
+
+SC_MODULE(driver){
+	sc_out<int> v1, v2, v3;	
+	sc_out<int> a, b, c;
+	int matriz[3][3];
+	int vetor[3];
+	sc_out<bool> pode_adicionar, pode_multiplicar, morrer;
+	sc_in<bool> multiplicado1, multiplicado2, multiplicado3;	
+	//sc_out<int> saida1, saida2, saida3;
+	
+	//int count_processos;
+	
+	void drive();
+    
+	SC_CTOR(driver) {
+        SC_THREAD(drive);
+    }
+};
+
+
+void driver::drive(){
+	int i=0, j=0;	
+	pode_adicionar.write(false);
+	morrer.write(false);
+	v1.write(vetor[0]);
+	v2.write(vetor[1]);
+	v3.write(vetor[2]);	
+	while(1){		
+		pode_adicionar.write(false);
+		a.write(matriz[i][j]);
+		b.write(matriz[i][j+1]);
+		c.write(matriz[i][j+2]);
+		pode_multiplicar.write(true);
+		
+		if(multiplicado1 && multiplicado2 && multiplicado3){
+			pode_multiplicar.write(false);			
+			pode_adicionar.write(true);		
+			i++;
+			if(i>3){
+				morrer.write(true);
+				break;
+			}		
+		}		
+	}
+}

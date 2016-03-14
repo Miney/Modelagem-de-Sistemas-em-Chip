@@ -1,0 +1,5 @@
+export SYSTEMC_HOME=/usr/local/systemc-2.3.0/
+
+export LD_LIBRARY_PATH=/usr/local/systemc-2.3.0/lib-linux
+
+g++ -I. -I$SYSTEMC_HOME/include -L. -L$SYSTEMC_HOME/lib-linux -o out sample.cpp -lsystemc -lm
